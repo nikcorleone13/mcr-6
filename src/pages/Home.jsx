@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { cuisineData, restaurantsData } from "../data/data";
+import { Link } from "react-router-dom";
 // console.log("cuisine", cuisineData, restaurantsData);
 
 const Home = () => {
@@ -30,8 +31,8 @@ const Home = () => {
 
   return (
     <div className="flex flex-col justify-between items-center ">
-      <h1 className="text-5xl font-semibold">Food Ordering Website</h1>
-      <div name="wrapper-div" className="mt-12 w-screen h-full">
+      <h1 className="text-6xl font-bold pt-6">Food Ordering Website</h1>
+      <div name="wrapper-div" className="mt-12 w-full h-full">
         {/* cuisine */}
         <div name="cuisine-div" className="flex flex-col items-center">
           <h3 className="text-3xl my-4">Select your cuisine</h3>
@@ -64,9 +65,11 @@ const Home = () => {
           <div>
             {showData.map((item) => {
               return (
-                <div key={item.id} className=" m-4 pb-16">
-                  <h1 className="pl-16 text-3xl font-semibold">
-                    Dishes by {item.name}
+                <div key={item.id} className=" border-b-4 m-4 py-16">
+                  <h1 className="pl-16 text-3xl font-semibold cursor-pointer hover:text-red-500">
+                    <Link to={`/restaurant/${item.id}`}>
+                      Dishes by {item.name}
+                    </Link>
                   </h1>
                   <div className="w-full h-[300px] flex justify-center ">
                     {/* cards */}
@@ -74,7 +77,7 @@ const Home = () => {
                       return (
                         <div
                           key={index}
-                          className="m-4 w-[250px] h-[300px] border-gray-400 border-2 rounded-lg flex flex-col justify-between "
+                          className="m-4 w-[250px] h-[300px] border-gray-400 border-2 rounded-lg flex flex-col justify-between hover:scale-105 duration-300 "
                         >
                           <img
                             src={menuItem.imgSrc}
