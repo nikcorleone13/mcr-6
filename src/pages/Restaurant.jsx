@@ -12,7 +12,6 @@ const Restaurant = () => {
   const [revName, setRevName] = useState("");
   const [revMessage, setRevMessage] = useState("");
   const { resId } = useParams();
-  console.log("resid", resId);
 
   localStorage.setItem("resId", parseInt(resId));
   const showId = localStorage.getItem("resId");
@@ -20,11 +19,10 @@ const Restaurant = () => {
   const resDetails = restaurantsData.filter(
     (item) => item.id === parseInt(showId)
   );
-  console.log("rest", resDetails);
 
   useEffect(() => {
     setShowData(resDetails);
-  }, []); // Run only once when the component mounts
+  }, []);
 
   const handleRatings = (e) => {
     setRevRating(e);
@@ -37,7 +35,6 @@ const Restaurant = () => {
   };
 
   const handleReview = () => {
-    console.log("revaca", revRating, revName, revMessage);
     const newRev = {
       rating: revRating,
       comment: revMessage,
@@ -82,7 +79,7 @@ const Restaurant = () => {
               description,
             }) => {
               return (
-                <div className="w-[60%] p-4">
+                <div className="w-[60%] p-4" key={id}>
                   <div className="p-1 flex justify-between">
                     <div className="min-w-[80%] text-gray-600">
                       <h1 className="text-6xl font-semibold text-black">
@@ -112,26 +109,30 @@ const Restaurant = () => {
                   <div className="mt-12 p-6 border-t-2 border-black">
                     <h1 className="font-bold text-5xl">Reviews</h1>
                     <div className="pt-10">
-                      {ratings.map(({ rating, comment, revName, pp }) => {
-                        return (
-                          <div className="m-2 p-6">
-                            <div className="flex justify-between">
-                              <div className="flex justify-start items-center">
-                                <img
-                                  src={pp}
-                                  className="rounded-[50%] w-12"
-                                  alt="Reviewer Profile"
-                                />
-                                <p className="px-3 font-semibold">{revName}</p>
+                      {ratings.map(
+                        ({ rating, comment, revName, pp }, index) => {
+                          return (
+                            <div key={index} className="m-2 p-6">
+                              <div className="flex justify-between">
+                                <div className="flex justify-start items-center">
+                                  <img
+                                    src={pp}
+                                    className="rounded-[50%] w-12"
+                                    alt="Reviewer Profile"
+                                  />
+                                  <p className="px-3 font-semibold">
+                                    {revName}
+                                  </p>
+                                </div>
+                                <div className="flex justify-center items-center text-2xl border-black px-3 py-2 rounded-xl bg-yellow-300">
+                                  {rating} <FaStar size={20} className="pl-1" />
+                                </div>
                               </div>
-                              <div className="flex justify-center items-center text-2xl border-black px-3 py-2 rounded-xl bg-yellow-300">
-                                {rating} <FaStar size={20} className="pl-1" />
-                              </div>
+                              <p className="px-1 py-1 text-lg">{comment}</p>
                             </div>
-                            <p className="px-1 py-1 text-lg">{comment}</p>
-                          </div>
-                        );
-                      })}
+                          );
+                        }
+                      )}
                     </div>
                   </div>
                 </div>
